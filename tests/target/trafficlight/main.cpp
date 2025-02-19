@@ -1,7 +1,4 @@
-#include "CppUTest/TestHarness.h"
-#include "CppUTest/CommandLineTestRunner.h"
-#include <stdio.h>
-#include "pico/stdlib.h"
+#include "main.h"
 
 int main(int ac, char ** av)
 {
