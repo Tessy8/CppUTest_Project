@@ -1,0 +1,9 @@
+# Build files
+build/
+CMakeFiles/
+
+# C/C++ output
+*.o
+*.obj
+*.out
+*.elf
