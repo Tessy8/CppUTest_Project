@@ -3,15 +3,6 @@
 #include "CppUTest/TestHarness.h"
 #include "traffic_light.h"
 
-extern "C" 
-{
-    int gpio_get(uint gpio)
-    {
-        // Simulate that the button is pressed by always returning 1
-        return 1;
-    }
-}
-
 TEST_GROUP(TrafficLightGroup)
 {
     void setup()
@@ -53,14 +44,14 @@ TEST(TrafficLightGroup, ButtonPressOnGreenGoesToYellowThenRed)
     CHECK_EQUAL(GREEN, runTrafficLight());
 
     // Simulate the pedestrian button press during GREEN
-    CHECK_TRUE(trafficLightButtonPressed());
+    CHECK_TRUE(traffic::trafficLightButtonPressed());
 
     // On the next run, we expect a transition to YELLOW
     startYellowTransition();
     CHECK_EQUAL(YELLOW, runTrafficLight());
 
     // Then the next run should bring it to RED
-    completeYellowTransitionToRed();
+    completeYellowTransitionToRed(3000);
     CHECK_EQUAL(RED, runTrafficLight());
 }
 
@@ -71,14 +62,14 @@ TEST(TrafficLightGroup, ButtonPressOnYellowOrRed)
     CHECK_EQUAL(YELLOW, runTrafficLight());
 
     // Simulate the pedestrian button press during YELLOW
-    CHECK_FALSE(trafficLightButtonPressed());
+    CHECK_FALSE(traffic::trafficLightButtonPressed());
 
     // Start light at RED
     setTrafficLightState(RED);
     CHECK_EQUAL(RED, runTrafficLight());
 
     // Simulate the pedestrian button press during RED
-    CHECK_FALSE(trafficLightButtonPressed());
+    CHECK_FALSE(traffic::trafficLightButtonPressed());
 
 }
 
@@ -109,6 +100,6 @@ TEST(TrafficLightGroup, NoDirectJumps)
 TEST(TrafficLightGroup, RedtoGreenLimits)
 {
     CHECK_EQUAL(MIN_LIMIT, holdOnBeforeGreen(0));
-    CHECK_EQUAL(30, holdOnBeforeGreen(30));
-    CHECK_EQUAL(MAX_LIMIT, holdOnBeforeGreen(61));
+    CHECK_EQUAL(30000, holdOnBeforeGreen(30000));
+    CHECK_EQUAL(MAX_LIMIT, holdOnBeforeGreen(61000));
 }

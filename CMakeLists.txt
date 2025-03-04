@@ -43,7 +43,7 @@ target_link_libraries(CppUTest_Project
                         hardware_rtc)
 
 # Include tests directory as subdirectory
-add_subdirectory(tests/target/led)
+add_subdirectory(tests/target/trafficlight)
 
 # Enable usb output, disable uart output
 pico_enable_stdio_usb(CppUTest_Project 1)

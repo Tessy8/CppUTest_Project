@@ -4,6 +4,15 @@ static traffic_light_state_t currentState = RED;
 static traffic_light_state_t nextState = currentState;
 static bool buttonPressed = false;
 
+namespace traffic {
+    bool gpio_get(uint gpio, bool test) {
+        if (test) {
+            return true;
+        }
+        return ::gpio_get(gpio); 
+    }
+}
+
 void setTrafficLightState(traffic_light_state_t state)
 {
     traffic_light_state_t previousState;
@@ -52,30 +61,32 @@ traffic_light_state_t runTrafficLight(void)
     return currentState;
 }
 
-bool trafficLightButtonPressed(void)
-{
-    buttonPressed = (gpio_get(BUTTON_PIN) == 1);
-    if (buttonPressed && currentState == GREEN)
+namespace traffic {
+    bool trafficLightButtonPressed(void)
     {
-        return true;
-    } else
-    {
-        return false;
+        buttonPressed = (gpio_get(BUTTON_PIN, true) == 1);
+        if (buttonPressed && currentState == GREEN)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
-}
-
+} 
+    
 void startYellowTransition(void)
 {
     setTrafficLightState(YELLOW);
 }
 
-void completeYellowTransitionToRed(uint8_t yellowToRedDuration)
+void completeYellowTransitionToRed(uint16_t yellowToRedDuration)
 {
     sleep_ms(yellowToRedDuration);
     setTrafficLightState(RED);
 }
 
-uint8_t holdOnBeforeGreen(uint8_t redToGreenDuration)
+uint16_t holdOnBeforeGreen(uint16_t redToGreenDuration)
 {
     if (redToGreenDuration < MIN_LIMIT)
     {

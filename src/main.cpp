@@ -3,7 +3,7 @@
 #include "main.h"
 #include "traffic_light.h"
 
-int main(void)
+int main()
 {
     stdio_init_all();
     // Initialize pins
@@ -20,7 +20,7 @@ int main(void)
 
     while(true)
     {
-        if (trafficLightButtonPressed() == true)
+        if (traffic::trafficLightButtonPressed() == true)
         {
             startYellowTransition();
             completeYellowTransitionToRed(YELLOW_TO_RED_DURATION);
