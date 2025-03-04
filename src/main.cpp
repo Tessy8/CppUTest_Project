@@ -20,7 +20,7 @@ int main()
 
     while(true)
     {
-        if (traffic::trafficLightButtonPressed() == true)
+        if (trafficLightButtonPressed() == true)
         {
             startYellowTransition();
             completeYellowTransitionToRed(YELLOW_TO_RED_DURATION);

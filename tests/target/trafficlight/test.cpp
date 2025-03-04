@@ -3,6 +3,17 @@
 #include "CppUTest/TestHarness.h"
 #include "traffic_light.h"
 
+bool trafficLightButtonPressed(bool simulatePressed)
+{
+    if (simulatePressed && currentState == GREEN)
+    {
+        return true;
+    } else
+    {
+        return false;
+    }
+}
+
 TEST_GROUP(TrafficLightGroup)
 {
     void setup()
@@ -62,14 +73,14 @@ TEST(TrafficLightGroup, ButtonPressOnYellowOrRed)
     CHECK_EQUAL(YELLOW, runTrafficLight());
 
     // Simulate the pedestrian button press during YELLOW
-    CHECK_FALSE(traffic::trafficLightButtonPressed());
+    CHECK_FALSE(trafficLightButtonPressed(true));
 
     // Start light at RED
     setTrafficLightState(RED);
     CHECK_EQUAL(RED, runTrafficLight());
 
     // Simulate the pedestrian button press during RED
-    CHECK_FALSE(traffic::trafficLightButtonPressed());
+    CHECK_FALSE(trafficLightButtonPressed(true));
 
 }
 

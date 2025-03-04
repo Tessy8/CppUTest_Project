@@ -18,14 +18,10 @@ typedef enum
     YELLOW
 }traffic_light_state_t;
 
-namespace traffic {
-    bool gpio_get(uint gpio, bool test);
-    bool trafficLightButtonPressed(void);
-}
-
 void setTrafficLightState(traffic_light_state_t state);
 traffic_light_state_t runTrafficLight(void);
 void startYellowTransition(void);
+bool trafficLightButtonPressed(void);
 void completeYellowTransitionToRed(uint16_t yellowToRedDuration);
 uint16_t holdOnBeforeGreen(uint16_t redToGreenDuration);
 
